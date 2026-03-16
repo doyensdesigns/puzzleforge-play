@@ -342,6 +342,19 @@ const App = {
 };
 
 /* == Puzzle generators == */
+
+// Helper utilities used by generators
+function shuffle(a) {
+  var b = a.slice();
+  for (var i = b.length-1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i+1));
+    var tmp = b[i]; b[i] = b[j]; b[j] = tmp;
+  }
+  return b;
+}
+function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
+function R(lo, hi) { return lo + Math.floor(Math.random() * (hi - lo + 1)); }
+
 function genCrossword(wordObjs, orient) {
   const isPortrait = orient === 'portrait';
   const entries = wordObjs
