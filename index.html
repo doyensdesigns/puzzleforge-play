@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -19,47 +20,47 @@ html, body {
 
 /* Loading screen */
 #pfLoader {
-  position: fixed; inset: 0; z-index: 99999;
-  background: #111e11;
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center; gap: 1.5rem;
+position: fixed; inset: 0; z-index: 99999;
+background: #111e11;
+display: flex; flex-direction: column;
+align-items: center; justify-content: center; gap: 1.5rem;
 }
 .pfl-icon  { font-size: 3.5rem; animation: pfl-pulse 1.4s ease-in-out infinite; }
 @keyframes pfl-pulse { 0%,100%{transform:scale(1);opacity:.8} 50%{transform:scale(1.12);opacity:1} }
 .pfl-title { font-size: 1.6rem; font-weight: 800; color: #81c784; letter-spacing: .05em; }
 .pfl-sub   { font-size: .9rem; color: rgba(255,255,255,.45); letter-spacing: .06em; }
 .pfl-spinner {
-  width: 40px; height: 40px; border: 3px solid rgba(129,199,132,.2);
-  border-top-color: #81c784; border-radius: 50%;
-  animation: pfl-spin .8s linear infinite;
+width: 40px; height: 40px; border: 3px solid rgba(129,199,132,.2);
+border-top-color: #81c784; border-radius: 50%;
+animation: pfl-spin .8s linear infinite;
 }
 @keyframes pfl-spin { to { transform: rotate(360deg); } }
 
 /* Error screen */
 #pfError {
-  position: fixed; inset: 0; z-index: 99998;
-  background: #1a1111;
-  display: none; flex-direction: column;
-  align-items: center; justify-content: center; gap: 1rem;
-  padding: 2rem; text-align: center;
+position: fixed; inset: 0; z-index: 99998;
+background: #1a1111;
+display: none; flex-direction: column;
+align-items: center; justify-content: center; gap: 1rem;
+padding: 2rem; text-align: center;
 }
 .pfe-icon  { font-size: 3rem; }
 .pfe-title { font-size: 1.4rem; font-weight: 700; color: #ef9a9a; }
 .pfe-msg   { font-size: .95rem; color: rgba(255,255,255,.55); max-width: 380px; line-height: 1.6; }
 .pfe-link  {
-  margin-top: .5rem; display: inline-block;
-  padding: .65rem 1.4rem; border-radius: 8px;
-  background: rgba(129,199,132,.15); border: 1px solid rgba(129,199,132,.35);
-  color: #81c784; font-size: .9rem; font-weight: 700; text-decoration: none;
+margin-top: .5rem; display: inline-block;
+padding: .65rem 1.4rem; border-radius: 8px;
+background: rgba(129,199,132,.15); border: 1px solid rgba(129,199,132,.35);
+color: #81c784; font-size: .9rem; font-weight: 700; text-decoration: none;
 }
 .pfe-link:hover { background: rgba(129,199,132,.25); }
 
 /* Branding footer */
 #pfBranding {
-  position: fixed; bottom: 0; left: 0; right: 0; z-index: 9001;
-  background: #0d160d; border-top: 1px solid rgba(255,255,255,.06);
-  padding: .45rem 1rem;
-  display: flex; align-items: center; justify-content: center; gap: .5rem;
+position: fixed; bottom: 0; left: 0; right: 0; z-index: 9001;
+background: #0d160d; border-top: 1px solid rgba(255,255,255,.06);
+padding: .45rem 1rem;
+display: flex; align-items: center; justify-content: center; gap: .5rem;
 }
 .pfb-text { font-size: .72rem; color: rgba(255,255,255,.35); letter-spacing: .03em; }
 .pfb-link { font-size: .72rem; color: #81c784; font-weight: 700; text-decoration: none; letter-spacing: .03em; }
@@ -68,6 +69,7 @@ html, body {
 /* Push play overlay above branding bar */
 #playOverlay { padding-bottom: 32px !important; }
 </style>
+
 </head>
 <body>
 
@@ -141,112 +143,113 @@ html, body {
   .po-complete.show{display:block;}
   .po-hint{font-size:.68rem;color:rgba(255,255,255,.35);font-style:italic;text-align:center;margin-bottom:.65rem;}
 
-  /* ── Crossword grid ── */
-  #poCwGrid{display:inline-grid;gap:0;border:2px solid #555;border-radius:2px;background:#555;}
-  .po-cw-cell{
-    position:relative;background:#fff;border:1px solid #bbb;cursor:text;
-  }
-  .po-cw-dead{background:#1a1a1a;}
-  .po-cw-num{
-    position:absolute;top:1px;left:2px;font-size:.55em;font-weight:800;
-    color:#666;font-family:'Inconsolata',monospace;line-height:1;
-    pointer-events:none;z-index:2;
-  }
-  .po-cw-inp{
-    position:absolute;inset:0;width:100%;height:100%;
-    border:none;background:transparent;text-align:center;
-    font-family:'Inconsolata',monospace;font-weight:700;text-transform:uppercase;
-    padding:0;outline:none;cursor:text;color:#1a1a1a;z-index:1;
-    font-size:inherit;-webkit-text-size-adjust:100%;
-  }
-  .po-cw-cell.po-correct{background:#d4f5e0 !important;border-color:#2d9e5a !important;}
-  .po-cw-cell.po-wrong{background:#fde8e8 !important;border-color:#e04040 !important;animation:poShake .35s;}
-  .po-cw-cell.po-active{background:#fffbe6 !important;border-color:#f0a500 !important;box-shadow:inset 0 0 0 2px rgba(240,165,0,.5);}
-  .po-cw-cell.po-word-hl{background:#d6e8ff !important;border-color:#5a9fe0 !important;}
-  .po-cw-cell.po-correct.po-word-hl{background:#b8f0d0 !important;}
-  .po-cw-inp-correct{color:#155724 !important;}
-  @keyframes poShake{0%,100%{transform:translateX(0)}25%{transform:translateX(-3px)}75%{transform:translateX(3px)}}
+/* ── Crossword grid ── */
+#poCwGrid{display:inline-grid;gap:0;border:2px solid #555;border-radius:2px;background:#555;}
+.po-cw-cell{
+position:relative;background:#fff;border:1px solid #bbb;cursor:text;
+}
+.po-cw-dead{background:#1a1a1a;}
+.po-cw-num{
+position:absolute;top:1px;left:2px;font-size:.55em;font-weight:800;
+color:#666;font-family:‘Inconsolata’,monospace;line-height:1;
+pointer-events:none;z-index:2;
+}
+.po-cw-inp{
+position:absolute;inset:0;width:100%;height:100%;
+border:none;background:transparent;text-align:center;
+font-family:‘Inconsolata’,monospace;font-weight:700;text-transform:uppercase;
+padding:0;outline:none;cursor:text;color:#1a1a1a;z-index:1;
+font-size:inherit;-webkit-text-size-adjust:100%;
+}
+.po-cw-cell.po-correct{background:#d4f5e0 !important;border-color:#2d9e5a !important;}
+.po-cw-cell.po-wrong{background:#fde8e8 !important;border-color:#e04040 !important;animation:poShake .35s;}
+.po-cw-cell.po-active{background:#fffbe6 !important;border-color:#f0a500 !important;box-shadow:inset 0 0 0 2px rgba(240,165,0,.5);}
+.po-cw-cell.po-word-hl{background:#d6e8ff !important;border-color:#5a9fe0 !important;}
+.po-cw-cell.po-correct.po-word-hl{background:#b8f0d0 !important;}
+.po-cw-inp-correct{color:#155724 !important;}
+@keyframes poShake{0%,100%{transform:translateX(0)}25%{transform:translateX(-3px)}75%{transform:translateX(3px)}}
 
-  /* ── Clues ── */
-  .po-clues-grid{display:grid;grid-template-columns:1fr 1fr;gap:.85rem;margin-top:.75rem;}
-  .po-clue-hdr{font-weight:900;border-bottom:2px solid rgba(255,255,255,.2);padding-bottom:.25rem;margin-bottom:.4rem;color:#e8f5e9;}
-  .po-clue-row{
-    display:flex;gap:.35rem;align-items:flex-start;padding:.2rem .3rem;
-    border-radius:5px;cursor:pointer;transition:background .12s;margin-bottom:.1rem;
-  }
-  .po-clue-row:hover{background:rgba(255,255,255,.07);}
-  .po-clue-row.po-clue-active{background:rgba(240,165,0,.18);border-radius:5px;}
-  .po-clue-num{font-family:'Inconsolata',monospace;font-weight:700;color:#81c784;min-width:20px;flex-shrink:0;font-size:.73rem;line-height:1.5;}
-  .po-clue-txt{font-size:.73rem;line-height:1.4;color:rgba(255,255,255,.75);}
-  .po-clue-badge{font-size:.75rem;font-weight:900;min-width:14px;flex-shrink:0;margin-left:auto;}
-  @media(max-width:600px){.po-clues-grid{grid-template-columns:1fr;}}
+/* ── Clues ── */
+.po-clues-grid{display:grid;grid-template-columns:1fr 1fr;gap:.85rem;margin-top:.75rem;}
+.po-clue-hdr{font-weight:900;border-bottom:2px solid rgba(255,255,255,.2);padding-bottom:.25rem;margin-bottom:.4rem;color:#e8f5e9;}
+.po-clue-row{
+display:flex;gap:.35rem;align-items:flex-start;padding:.2rem .3rem;
+border-radius:5px;cursor:pointer;transition:background .12s;margin-bottom:.1rem;
+}
+.po-clue-row:hover{background:rgba(255,255,255,.07);}
+.po-clue-row.po-clue-active{background:rgba(240,165,0,.18);border-radius:5px;}
+.po-clue-num{font-family:‘Inconsolata’,monospace;font-weight:700;color:#81c784;min-width:20px;flex-shrink:0;font-size:.73rem;line-height:1.5;}
+.po-clue-txt{font-size:.73rem;line-height:1.4;color:rgba(255,255,255,.75);}
+.po-clue-badge{font-size:.75rem;font-weight:900;min-width:14px;flex-shrink:0;margin-left:auto;}
+@media(max-width:600px){.po-clues-grid{grid-template-columns:1fr;}}
 
-  /* ── Word Search ── */
-  #poWsGrid{
-    display:inline-grid;gap:1px;background:#3a4a3a;border:2px solid #3a4a3a;
-    border-radius:5px;overflow:hidden;touch-action:none;user-select:none;-webkit-user-select:none;
-  }
-  .po-ws-cell{
-    display:flex;align-items:center;justify-content:center;
-    font-family:'Inconsolata',monospace;font-weight:700;color:#e8f5e9;
-    background:#1e2e1e;cursor:pointer;-webkit-tap-highlight-color:transparent;
-    transition:background .06s;
-  }
-  .po-ws-cell.po-ws-sel{background:#1565c0 !important;color:#fff !important;}
-  .po-ws-cell.po-ws-found{background:rgba(56,142,60,.7) !important;color:#fff !important;font-weight:900;}
-  .po-ws-words{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.75rem;}
-  .po-ws-word{
-    font-family:'Inconsolata',monospace;font-weight:700;font-size:.8rem;
-    letter-spacing:.06em;color:rgba(255,255,255,.8);padding:.2rem .5rem;
-    background:rgba(255,255,255,.06);border-radius:4px;transition:all .2s;
-  }
-  .po-ws-word.po-ws-found-word{text-decoration:line-through;color:#4caf50;opacity:.6;}
+/* ── Word Search ── */
+#poWsGrid{
+display:inline-grid;gap:1px;background:#3a4a3a;border:2px solid #3a4a3a;
+border-radius:5px;overflow:hidden;touch-action:none;user-select:none;-webkit-user-select:none;
+}
+.po-ws-cell{
+display:flex;align-items:center;justify-content:center;
+font-family:‘Inconsolata’,monospace;font-weight:700;color:#e8f5e9;
+background:#1e2e1e;cursor:pointer;-webkit-tap-highlight-color:transparent;
+transition:background .06s;
+}
+.po-ws-cell.po-ws-sel{background:#1565c0 !important;color:#fff !important;}
+.po-ws-cell.po-ws-found{background:rgba(56,142,60,.7) !important;color:#fff !important;font-weight:900;}
+.po-ws-words{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.75rem;}
+.po-ws-word{
+font-family:‘Inconsolata’,monospace;font-weight:700;font-size:.8rem;
+letter-spacing:.06em;color:rgba(255,255,255,.8);padding:.2rem .5rem;
+background:rgba(255,255,255,.06);border-radius:4px;transition:all .2s;
+}
+.po-ws-word.po-ws-found-word{text-decoration:line-through;color:#4caf50;opacity:.6;}
 
-  /* ── Other puzzles ── */
-  .po-card{
-    background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);
-    border-radius:8px;padding:.65rem .85rem;margin-bottom:.5rem;
-  }
-  .po-scramble-word{font-family:'Inconsolata',monospace;font-size:1.2rem;font-weight:700;letter-spacing:.12em;color:#81c784;margin-bottom:.3rem;}
-  .po-clue-sub{font-size:.72rem;color:rgba(255,255,255,.45);font-style:italic;margin-bottom:.35rem;}
-  .po-inp-field{
-    width:100%;background:#fff;border:1.5px solid #aaa;border-radius:5px;
-    padding:.35rem .55rem;font-family:'Inconsolata',monospace;font-weight:700;
-    font-size:16px;text-transform:uppercase;color:#1a1a1a;outline:none;
-    transition:border-color .15s;
-  }
-  .po-inp-field:focus{border-color:#66bb6a;box-shadow:0 0 0 2px rgba(102,187,106,.25);}
-  .po-inp-field.po-correct{background:#d4f5e0;border-color:#2d9e5a;color:#155724;}
-  .po-inp-field.po-wrong{background:#fde8e8;border-color:#e04040;animation:poShake .35s;}
-  .po-fill-sentence{font-size:.88rem;color:rgba(255,255,255,.8);line-height:1.9;display:flex;flex-wrap:wrap;align-items:baseline;gap:.15rem;}
-  .po-fill-blank{display:inline-flex;align-items:center;}
-  .po-fill-inp{
-    background:transparent;border:none;border-bottom:2px solid #66bb6a;
-    color:#e8f5e9;font-family:'Inconsolata',monospace;font-weight:700;
-    font-size:1em;padding:.1rem .2rem;outline:none;text-transform:uppercase;
-    min-width:60px;-webkit-text-size-adjust:100%;
-  }
-  .po-fill-inp.po-correct{border-bottom-color:#4caf50;color:#a5d6a7;}
-  .po-fill-inp.po-wrong{border-bottom-color:#ef5350;animation:poShake .35s;}
-  .po-code-ref{display:flex;flex-wrap:wrap;gap:.25rem;margin-bottom:.75rem;}
-  .po-code-chip{
-    background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);
-    border-radius:4px;padding:.2rem .4rem;text-align:center;min-width:34px;
-    font-family:'Inconsolata',monospace;
-  }
-  .po-code-num{font-size:.75rem;font-weight:700;color:#81c784;}
-  .po-code-ltr{font-size:.6rem;color:rgba(255,255,255,.4);}
-  .po-match-cols{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
-  .po-match-item{
-    display:flex;align-items:center;gap:.5rem;padding:.4rem .6rem;
-    background:rgba(255,255,255,.05);border-radius:6px;margin-bottom:.35rem;
-  }
-  .po-match-num{font-family:'Inconsolata',monospace;font-weight:700;color:#81c784;min-width:22px;font-size:.8rem;}
-  .po-match-word{font-size:.8rem;color:rgba(255,255,255,.85);}
-  .po-match-def{font-size:.78rem;color:rgba(255,255,255,.65);}
-  </style>
+/* ── Other puzzles ── */
+.po-card{
+background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);
+border-radius:8px;padding:.65rem .85rem;margin-bottom:.5rem;
+}
+.po-scramble-word{font-family:‘Inconsolata’,monospace;font-size:1.2rem;font-weight:700;letter-spacing:.12em;color:#81c784;margin-bottom:.3rem;}
+.po-clue-sub{font-size:.72rem;color:rgba(255,255,255,.45);font-style:italic;margin-bottom:.35rem;}
+.po-inp-field{
+width:100%;background:#fff;border:1.5px solid #aaa;border-radius:5px;
+padding:.35rem .55rem;font-family:‘Inconsolata’,monospace;font-weight:700;
+font-size:16px;text-transform:uppercase;color:#1a1a1a;outline:none;
+transition:border-color .15s;
+}
+.po-inp-field:focus{border-color:#66bb6a;box-shadow:0 0 0 2px rgba(102,187,106,.25);}
+.po-inp-field.po-correct{background:#d4f5e0;border-color:#2d9e5a;color:#155724;}
+.po-inp-field.po-wrong{background:#fde8e8;border-color:#e04040;animation:poShake .35s;}
+.po-fill-sentence{font-size:.88rem;color:rgba(255,255,255,.8);line-height:1.9;display:flex;flex-wrap:wrap;align-items:baseline;gap:.15rem;}
+.po-fill-blank{display:inline-flex;align-items:center;}
+.po-fill-inp{
+background:transparent;border:none;border-bottom:2px solid #66bb6a;
+color:#e8f5e9;font-family:‘Inconsolata’,monospace;font-weight:700;
+font-size:1em;padding:.1rem .2rem;outline:none;text-transform:uppercase;
+min-width:60px;-webkit-text-size-adjust:100%;
+}
+.po-fill-inp.po-correct{border-bottom-color:#4caf50;color:#a5d6a7;}
+.po-fill-inp.po-wrong{border-bottom-color:#ef5350;animation:poShake .35s;}
+.po-code-ref{display:flex;flex-wrap:wrap;gap:.25rem;margin-bottom:.75rem;}
+.po-code-chip{
+background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);
+border-radius:4px;padding:.2rem .4rem;text-align:center;min-width:34px;
+font-family:‘Inconsolata’,monospace;
+}
+.po-code-num{font-size:.75rem;font-weight:700;color:#81c784;}
+.po-code-ltr{font-size:.6rem;color:rgba(255,255,255,.4);}
+.po-match-cols{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+.po-match-item{
+display:flex;align-items:center;gap:.5rem;padding:.4rem .6rem;
+background:rgba(255,255,255,.05);border-radius:6px;margin-bottom:.35rem;
+}
+.po-match-num{font-family:‘Inconsolata’,monospace;font-weight:700;color:#81c784;min-width:22px;font-size:.8rem;}
+.po-match-word{font-size:.8rem;color:rgba(255,255,255,.85);}
+.po-match-def{font-size:.78rem;color:rgba(255,255,255,.65);}
+</style>
 
   <!-- Header -->
+
   <div id="poHeader">
     <span style="font-size:1.3rem;">▶</span>
     <span id="poTitle">Play Mode</span>
@@ -256,9 +259,11 @@ html, body {
   </div>
 
   <!-- Puzzle tabs -->
+
   <div id="poTabs"></div>
 
   <!-- Main scrollable body -->
+
   <div id="poBody">
     <!-- panels injected by PlayMode.open() -->
   </div>
@@ -726,16 +731,82 @@ function missedBanner(missed, key) {
   return `<div style="background:#fff3cd;border:1.5px solid #f59e0b;border-radius:8px;padding:.45rem .65rem;margin-bottom:.65rem;font-size:.74rem;font-weight:700;color:#92400e;">⚠ ${missed.length} word${missed.length!==1?'s':''} could not be placed: <span style="font-family:'Inconsolata',monospace">${missed.join(', ')}</span> — tap ↺ Regen.</div>`;
 }
 
+/* == _generateAndPlay — generate all puzzle types then open play mode == */
+function _generateAndPlay() {
+  const types = ['crossword','wordsearch','scramble','fill','codebreaker','matching'];
+  types.forEach(t => {
+    try {
+      if (t === 'crossword')   S.puzzles.crossword   = genCrossword(S.words, S.orient);
+      if (t === 'wordsearch')  S.puzzles.wordsearch  = genWordSearch(S.words, S.orient);
+      if (t === 'scramble')    S.puzzles.scramble    = genScramble(S.words);
+      if (t === 'fill')        S.puzzles.fill        = genFillIn(S.words);
+      if (t === 'codebreaker') S.puzzles.codebreaker = genCodebreaker(S.words);
+      if (t === 'matching')    S.puzzles.matching    = genMatching(S.words);
+    } catch(e) {}
+  });
+  renderAll();
+  setTimeout(() => App.togglePlayMode(), 200);
+  return true;
+}
+
 /* == loadFromPlayUrl == */
 function loadFromPlayUrl() {
   const params   = new URLSearchParams(location.search);
-  const encoded  = params.get('puzzles');
   const playFlag = params.get('play') === '1';
-  if (!encoded || !playFlag) return false;
+  const noAds    = params.get('noads') === '1';
+  if (!playFlag) return false;
+
+  // ── PuzzleForge Compact format (?pf=) ──────────────────────────────
+  const pfEncoded = params.get('pf');
+  if (pfEncoded) {
+    try {
+      const b64   = pfEncoded.replace(/-/g,'+').replace(/_/g,'/');
+      const bin   = atob(b64);
+      const bytes = Array.from(bin).map(c => c.charCodeAt(0));
+      let bytePos=0, bitBuf=0, bitCount=0;
+      function readBits(n) {
+        while(bitCount<n){bitBuf=(bitBuf<<8)|(bytes[bytePos++]||0);bitCount+=8;}
+        bitCount-=n;
+        return (bitBuf>>bitCount)&((1<<n)-1);
+      }
+      const version   = readBits(8);
+      const wordCount = readBits(8);
+      const wordList  = [];
+      for(let i=0;i<wordCount;i++){
+        let word='',ch;
+        while((ch=readBits(5))!==0) word+=String.fromCharCode(ch+64);
+        wordList.push({word, clue:'', id:'w'+i});
+      }
+      readBits(5); // end-of-words sentinel
+      const clueCount = readBits(8);
+      for(let i=0;i<clueCount;i++){
+        const idx=readBits(8);
+        const clueBuf=[];
+        let b;
+        while((b=readBits(8))!==0) clueBuf.push(b);
+        try {
+          const str = new TextDecoder().decode(new Uint8Array(clueBuf));
+          if(wordList[idx]) wordList[idx].clue = str;
+        } catch(_) {}
+      }
+      const words = wordList.filter(w=>w.word.length>=2).slice(0,60);
+      if(!words.length) return false;
+      S.title  = 'Shared Puzzles';
+      S.words  = words;
+      S.orient = 'portrait';
+      if(noAds) document.querySelectorAll('.about-license-shop,.pfb-link,.pfb-text').forEach(el=>el.style.display='none');
+      return _generateAndPlay();
+    } catch(e) {
+      console.warn('[PF Play] pf= decode error:', e.message);
+    }
+  }
+
+  // ── Legacy LZString format (?puzzles=) ─────────────────────────────
+  const encoded  = params.get('puzzles');
+  if (!encoded) return false;
 
   try {
     const json = LZString.decompressFromEncodedURIComponent(encoded);
-    if (!json) return false;
     const data = safeJSONParse(json);
     if (!data || !data.w || !Array.isArray(data.w)) return false;
 
@@ -770,21 +841,7 @@ function loadFromPlayUrl() {
     }
 
     // Word list only — generate fresh puzzles then open play mode
-    const types = ['crossword','wordsearch','scramble','fill','codebreaker','matching'];
-    const wordObjs = S.words;
-    types.forEach(t => {
-      try {
-        if (t === 'crossword')   S.puzzles.crossword   = genCrossword(wordObjs, S.orient);
-        if (t === 'wordsearch')  S.puzzles.wordsearch  = genWordSearch(wordObjs, S.orient);
-        if (t === 'scramble')    S.puzzles.scramble    = genScramble(wordObjs);
-        if (t === 'fill')        S.puzzles.fill        = genFillIn(wordObjs);
-        if (t === 'codebreaker') S.puzzles.codebreaker = genCodebreaker(wordObjs);
-        if (t === 'matching')    S.puzzles.matching    = genMatching(wordObjs);
-      } catch(e) {}
-    });
-    renderAll();
-    setTimeout(() => App.togglePlayMode(), 200);
-    return true;
+    return _generateAndPlay();
 
   } catch (e) {
     console.warn('[PuzzleForge] Failed to load from URL:', e);
@@ -1479,6 +1536,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   var params  = new URLSearchParams(location.search);
   var encoded = params.get('puzzles');
+  var pfData  = params.get('pf');
   var isPlay  = params.get('play') === '1';
   var noAds   = params.get('noads') === '1';
 
@@ -1494,7 +1552,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
-  if (!encoded || !isPlay) {
+  if ((!encoded && !pfData) || !isPlay) {
     loader.style.display = 'none';
     error.style.display  = 'flex';
     return;
@@ -1536,5 +1594,6 @@ document.addEventListener('DOMContentLoaded', function() {
   }, 300);
 });
 </script>
+
 </body>
 </html>
