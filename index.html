@@ -1480,6 +1480,19 @@ document.addEventListener('DOMContentLoaded', function() {
   var params  = new URLSearchParams(location.search);
   var encoded = params.get('puzzles');
   var isPlay  = params.get('play') === '1';
+  var noAds   = params.get('noads') === '1';
+
+  // Hide Etsy/branding elements when noads=1
+  if (noAds) {
+    var toHide = ['pfBranding'];
+    toHide.forEach(function(id) {
+      var el = document.getElementById(id);
+      if (el) el.style.display = 'none';
+    });
+    document.querySelectorAll('.pfb-link, .pfb-text, .pfe-link').forEach(function(el) {
+      el.style.display = 'none';
+    });
+  }
 
   if (!encoded || !isPlay) {
     loader.style.display = 'none';
@@ -1502,16 +1515,18 @@ document.addEventListener('DOMContentLoaded', function() {
       // Hide the exit button — this is a play-only page, nowhere to go back to
       var closeBtn = document.getElementById('poCloseBtn');
       if (closeBtn) closeBtn.style.display = 'none';
-      // Add PuzzleForge branding link in the header
-      var hdr = document.getElementById('poHeader');
-      if (hdr) {
-        var brand   = document.createElement('a');
-        brand.href  = 'https://www.etsy.com/shop/DoyensDesigns';
-        brand.target = '_blank';
-        brand.rel   = 'noopener noreferrer';
-        brand.textContent = '\u1F9E9 PuzzleForge';
-        brand.style.cssText = 'font-size:.72rem;color:#81c784;text-decoration:none;font-weight:700;white-space:nowrap;margin-left:auto;';
-        hdr.appendChild(brand);
+      // Add PuzzleForge branding link in the header (skip if noads=1)
+      if (!noAds) {
+        var hdr = document.getElementById('poHeader');
+        if (hdr) {
+          var brand   = document.createElement('a');
+          brand.href  = 'https://www.etsy.com/shop/DoyensDesigns';
+          brand.target = '_blank';
+          brand.rel   = 'noopener noreferrer';
+          brand.textContent = '\u{1F9E9} PuzzleForge';
+          brand.style.cssText = 'font-size:.72rem;color:#81c784;text-decoration:none;font-weight:700;white-space:nowrap;margin-left:auto;';
+          hdr.appendChild(brand);
+        }
       }
     } catch(e) {
       loader.style.display = 'none';
