@@ -1,0 +1,11 @@
+PuzzleForge - Desktop Edition
+Copyright (c) DoyensDesigns. All rights reserved.
+
+This software is proprietary and confidential.
+
+You may install and use this software on devices you own or control.
+You may not copy, redistribute, reverse engineer, decompile, or
+create derivative works from this software without express written
+permission from DoyensDesigns.
+
+This software is provided "as is" without warranty of any kind.

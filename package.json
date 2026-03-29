@@ -1,0 +1,138 @@
+{
+  "name": "puzzleforge",
+  "version": "1.0.0",
+  "description": "PuzzleForge - Puzzle Generator Desktop Edition",
+  "main": "main.js",
+  "author": "DoyensDesigns",
+  "license": "UNLICENSED",
+  "scripts": {
+    "start": "electron .",
+    "build:win": "electron-builder --win nsis portable",
+    "build:win-nsis": "electron-builder --win nsis",
+    "build:win-portable": "electron-builder --win portable",
+    "build:mac": "electron-builder --mac dmg zip --publish never",
+    "build:mac:ci": "electron-builder --mac dmg zip -c.mac.hardenedRuntime=false",
+    "rebuild:qrcode-inline": "npx browserify ./node_modules/qrcode/lib/browser.js -s QRCode -o ./qrcode-browser-bundle.js && node scripts/inline-qrcode-bundle.js"
+  },
+  "dependencies": {
+    "qrcode": "^1.5.4"
+  },
+  "devDependencies": {
+    "electron": "33.2.0",
+    "electron-builder": "25.1.8",
+    "javascript-obfuscator": "4.1.1",
+    "jimp": "^1.6.0",
+    "png-to-ico": "^3.0.1"
+  },
+  "build": {
+    "icon": "icon.png",
+    "appId": "com.doyensdesigns.puzzleforge",
+    "productName": "PuzzleForge",
+    "copyright": "Copyright (c) DoyensDesigns. All rights reserved.",
+    "asar": true,
+    "directories": {
+      "output": "dist"
+    },
+    "extraResources": [
+      {
+        "from": "icon.ico",
+        "to": "icon.ico"
+      }
+    ],
+    "files": [
+      "main.js",
+      "preload.js",
+      "puzzleforge.html",
+      "icon.ico",
+      "icon.icns",
+      "icon.png"
+    ],
+    "win": {
+      "icon": "icon.ico",
+      "artifactName": "PuzzleForge-Windows-${version}-${arch}.${ext}",
+      "requestedExecutionLevel": "asInvoker",
+      "signAndEditExecutable": false,
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "allowElevation": false,
+      "perMachine": false,
+      "deleteAppDataOnUninstall": true,
+      "include": "build\\installer.nsh",
+      "installerIcon": "icon.ico",
+      "uninstallerIcon": "icon.ico",
+      "installerHeaderIcon": "icon.ico",
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "PuzzleForge",
+      "license": "LICENSE.txt"
+    },
+    "portable": {
+      "artifactName": "PuzzleForge-Windows-Portable-${version}.exe"
+    },
+    "mac": {
+      "icon": "icon.icns",
+      "artifactName": "PuzzleForge-Mac-${version}-${arch}.${ext}",
+      "category": "public.app-category.productivity",
+      "darkModeSupport": true,
+      "hardenedRuntime": true,
+      "gatekeeperAssess": false,
+      "entitlements": "entitlements.mac.plist",
+      "entitlementsInherit": "entitlements.mac.plist",
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "x64",
+            "arm64"
+          ]
+        },
+        {
+          "target": "zip",
+          "arch": [
+            "x64",
+            "arm64"
+          ]
+        }
+      ]
+    },
+    "dmg": {
+      "title": "PuzzleForge ${version}",
+      "icon": "icon.icns",
+      "iconSize": 80,
+      "contents": [
+        {
+          "x": 130,
+          "y": 220,
+          "type": "file"
+        },
+        {
+          "x": 410,
+          "y": 220,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ],
+      "window": {
+        "width": 540,
+        "height": 380
+      }
+    },
+    "publish": null
+  }
+}
